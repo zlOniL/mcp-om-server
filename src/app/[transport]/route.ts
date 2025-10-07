@@ -21,6 +21,25 @@ const handler = createMcpHandler(
                     }
                 ]
             })
+        ),
+        server.tool(
+            "vendasMes",
+            "Retorna as vendas do mês",
+            {
+                experienceLevel: z.enum(["Setembro", "Outubro"]),
+            },
+            ({ experienceLevel } ) => ({
+                content: [
+                    {
+                        type: "text",
+                        text: `I recommend you take the ${
+                            experienceLevel === "Setembro" 
+                            ? "R$ 100.000,00" 
+                            : "R$ 150.000,00"
+                        } course.`,
+                    }
+                ]
+            })
         )
     },
     {
