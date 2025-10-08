@@ -48,16 +48,28 @@ const handler = createMcpHandler(
             "Retorna a lista de pedidos de venda da empresa",
             {},
             async () => {
-                const data = await productList();
-                console.log("Dados da lista de pedidos de venda:", data);
-                return {
-                content: [
-                    {
-                    type: "text",
-                    text: JSON.stringify(data),
-                    }
-                ]
-                };
+                try {
+                    const data = await productList();
+                    console.log("Dados da lista de pedidos de venda:", data);
+                    return {
+                        content: [
+                            {
+                                type: "text",
+                                text: JSON.stringify(data),
+                            }
+                        ]
+                    };
+                } catch (error: any) {
+                    console.error("Erro ao buscar lista de pedidos de venda:", error);
+                    return {
+                        content: [
+                            {
+                                type: "text",
+                                text: `Erro ao buscar lista de pedidos de venda: ${error.message || error}`,
+                            }
+                        ]
+                    };
+                }
             }
         )
     },
