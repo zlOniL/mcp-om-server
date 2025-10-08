@@ -49,6 +49,7 @@ const handler = createMcpHandler(
             {},
             async () => {
                 const data = await productList();
+                console.log("Dados da lista de pedidos de venda:", data);
                 return {
                 content: [
                     {
