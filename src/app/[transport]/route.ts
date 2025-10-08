@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server"
 import { createMcpHandler,  } from "@vercel/mcp-adapter";
 import { z } from "zod";
 import { productList } from "../modules/listas/productList";
@@ -77,4 +78,43 @@ const handler = createMcpHandler(
     }
 );
 
-export { handler as GET, handler as POST };
+// Wrapper para adicionar CORS headers
+const withCORS = (handler: any) => async (request: Request) => {
+    // Headers CORS
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept',
+    };
+
+    // Handle preflight OPTIONS request
+    if (request.method === 'OPTIONS') {
+        return new NextResponse(null, {
+            status: 200,
+            headers: corsHeaders,
+        });
+    }
+
+    // Execute o handler original
+    const response = await handler(request);
+
+    // Adiciona headers CORS na resposta
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+        response.headers.set(key, value);
+    });
+
+    return response;
+};
+
+export const GET = withCORS(handler);
+export const POST = withCORS(handler);
+export const OPTIONS = async () => {
+    return new NextResponse(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept',
+        },
+    });
+};
