@@ -7,7 +7,7 @@ import { z } from "zod";
 const fetchPedidosVenda = async () => {
     try {
         // const empresaId = '1796204';
-        const token = "17dd41eb-05ae-4954-8c96-00cc449a5ab6";
+        const token = "a50d18bf-e25c-4fc3-8e8b-04a2b0aea731";
         
         console.log('Buscando pedidos da API Open Manager...');
         
