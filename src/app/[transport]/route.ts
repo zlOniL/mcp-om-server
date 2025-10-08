@@ -1,5 +1,6 @@
 import { createMcpHandler,  } from "@vercel/mcp-adapter";
 import { z } from "zod";
+import { productList } from "../modules/listas/productList";
 
 const handler = createMcpHandler(
     (server) => {
@@ -40,6 +41,22 @@ const handler = createMcpHandler(
                     }
                 ]
             })
+        ),
+        server.tool(
+            "listaPedidosVenda",
+            "Retorna a lista de pedidos de venda da empresa",
+            {},
+            async () => {
+                const data = await productList();
+                return {
+                content: [
+                    {
+                    type: "text",
+                    text: JSON.stringify(data),
+                    }
+                ]
+                };
+            }
         )
     },
     {

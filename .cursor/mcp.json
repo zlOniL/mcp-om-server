@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "MCP Server OM": {
-      "type": "sse",
-      "url": "https://mcp-server-om.vercel.app/sse"
-    }
-  }
-}
