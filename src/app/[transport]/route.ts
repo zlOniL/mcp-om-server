@@ -6,13 +6,13 @@ import { z } from "zod";
 
 const fetchPedidosVenda = async () => {
     try {
-        const empresaId = '1796204';
+        // const empresaId = '1796204';
         const token = "17dd41eb-05ae-4954-8c96-00cc449a5ab6";
         
         console.log('Buscando pedidos da API Open Manager...');
         
         const response = await fetch(
-            `https://api.openmanager.com.br/listarPedidoVenda/${empresaId}`,
+            `https://api.openmanager.com.br/listarPedidosVenda`,
             {
                 method: 'GET',
                 headers: {
