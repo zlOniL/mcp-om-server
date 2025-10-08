@@ -1,7 +1,47 @@
 import { NextResponse } from "next/server"
 import { createMcpHandler,  } from "@vercel/mcp-adapter";
 import { z } from "zod";
-import { productList } from "../modules/listas/productList";
+// import { productList } from "../modules/listas/productList";
+
+
+const fetchPedidosVenda = async () => {
+    try {
+        const empresaId = '1796204';
+        const token = "17dd41eb-05ae-4954-8c96-00cc449a5ab6";
+        
+        console.log('Buscando pedidos da API Open Manager...');
+        
+        const response = await fetch(
+            `https://api.openmanager.com.br/listarPedidoVenda/${empresaId}`,
+            {
+                method: 'GET',
+                headers: {
+                    'empresaToken': token,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'User-Agent': 'MCP-Server/1.0'
+                },
+                cache: 'no-store'
+            }
+        );
+
+        console.log('Status da resposta:', response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Erro da API:', errorText);
+            throw new Error(`API retornou ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log('Dados recebidos com sucesso');
+        return data;
+        
+    } catch (error) {
+        console.error('Erro ao buscar pedidos:', error);
+        throw error;
+    }
+};
 
 const handler = createMcpHandler(
     (server) => {
@@ -49,7 +89,7 @@ const handler = createMcpHandler(
             {},
             async () => {
                 try {
-                    const data = await productList();
+                    const data = await fetchPedidosVenda();
                     console.log("Dados da lista de pedidos de venda:", data);
                     return {
                         content: [
