@@ -14,7 +14,7 @@ import { z } from 'zod';
 // });
 
 export const productList = async () => {
-    const response = await axios.get('https://api.openmanager.com.br/listarPedidosVenda', {
+    const response = await axios.get('https://api.openmanager.com.br/listarPedidoVenda/1796204', {
         headers: {
             'empresaToken': "17dd41eb-05ae-4954-8c96-00cc449a5ab6"
         }
